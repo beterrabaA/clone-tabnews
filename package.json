@@ -1,0 +1,28 @@
+{
+  "name": "clone-tabnews",
+  "version": "1.0.0",
+  "description": "Implementação do https://www.tabnews.com.br para  https://www.curso.dev",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "author": "Beterraba",
+  "license": "MIT",
+  "dependencies": {
+    "next": "^13.5.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@rocketseat/eslint-config": "^2.1.0",
+    "@types/node": "^20.7.2",
+    "@types/react": "^18.2.23",
+    "@types/react-dom": "^18.2.8",
+    "eslint": "^8.50.0",
+    "eslint-config-next": "^13.5.3",
+    "typescript": "^5.2.2"
+  }
+}
