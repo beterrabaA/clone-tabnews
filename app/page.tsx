@@ -1,7 +1,7 @@
 const page = () => {
   return (
     <div>
-      <h1>Gato Lero lero lero lero lero</h1>
+      <h1>Gato do regador</h1>
     </div>
   )
 }
