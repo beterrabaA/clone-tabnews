@@ -3,7 +3,7 @@ const page = () => {
     <div>
       <h1>Gato do regador</h1>
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;
