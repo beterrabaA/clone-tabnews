@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { ReactNode } from "react";
 
-export const meta: Metadata = {
+export const metadata: Metadata = {
   title: "Clone Tabnews",
   description: "A clone of Tabnews",
 };
