@@ -7,13 +7,15 @@ async function query(queryObj) {
     user: process.env.POSTGRES_USER,
     database: process.env.POSTGRES_DB,
     password: process.env.POSTGRES_PASSWORD,
+    ssl: process.env.NODE_ENV === "development" ? false : true,
   });
-  await client.connect();
   try {
+    await client.connect();
     const result = await client.query(queryObj);
     return result;
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    throw error;
   } finally {
     client.end();
   }
