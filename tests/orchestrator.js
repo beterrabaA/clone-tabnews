@@ -1,5 +1,8 @@
 import retry from "async-retry";
 
+export const WEB_SERVICE_URL = "http://localhost:3000";
+export const ORCHESTRATOR_TIMEOUT_IN_MILLISECONDS = 60_000;
+
 export async function waitForAllServices() {
   await waitForWebService();
 
@@ -9,7 +12,7 @@ export async function waitForAllServices() {
     });
 
     async function fetchStatusPage() {
-      const response = await fetch("http://localhost:3000/api/v1/status");
+      const response = await fetch(`${WEB_SERVICE_URL}/api/v1/status`);
       const responseBody = await response.json();
     }
   }

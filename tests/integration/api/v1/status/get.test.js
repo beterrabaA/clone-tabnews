@@ -1,11 +1,15 @@
-import { waitForAllServices } from "@/tests/orchestrator";
+import {
+  ORCHESTRATOR_TIMEOUT_IN_MILLISECONDS,
+  waitForAllServices,
+  WEB_SERVICE_URL,
+} from "@/tests/orchestrator";
 
 beforeAll(async () => {
   await waitForAllServices();
-});
+}, ORCHESTRATOR_TIMEOUT_IN_MILLISECONDS);
 
 test("GET to /api/v1/status should return 200", async () => {
-  const response = await fetch("http://localhost:3000/api/v1/status");
+  const response = await fetch(`${WEB_SERVICE_URL}/api/v1/status`);
   expect(response.status).toBe(200);
 
   const responseBody = await response.json();
