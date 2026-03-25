@@ -12,8 +12,7 @@ export async function waitForAllServices() {
     });
 
     async function fetchStatusPage() {
-      const response = await fetch(`${WEB_SERVICE_URL}/api/v1/status`);
-      const responseBody = await response.json();
+      await fetch(`${WEB_SERVICE_URL}/api/v1/status`);
     }
   }
 }
