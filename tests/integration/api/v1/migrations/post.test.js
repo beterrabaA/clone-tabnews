@@ -1,14 +1,10 @@
 import database from "@/infra/database.js";
-import {
-  ORCHESTRATOR_TIMEOUT_IN_MILLISECONDS,
-  waitForAllServices,
-  WEB_SERVICE_URL,
-} from "@/tests/orchestrator";
+import { waitForAllServices, WEB_SERVICE_URL } from "@/tests/orchestrator";
 
 beforeAll(async () => {
   await waitForAllServices();
   await database.query("drop schema public cascade; create schema public;");
-}, ORCHESTRATOR_TIMEOUT_IN_MILLISECONDS);
+});
 
 test("POST to /api/v1/migrations should return 200", async () => {
   const response1 = await fetch(`${WEB_SERVICE_URL}/api/v1/migrations`, {

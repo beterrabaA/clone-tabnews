@@ -1,7 +1,6 @@
 import retry from "async-retry";
 
 export const WEB_SERVICE_URL = "http://localhost:3000";
-export const ORCHESTRATOR_TIMEOUT_IN_MILLISECONDS = 60_000;
 
 export async function waitForAllServices() {
   await waitForWebService();
@@ -9,6 +8,7 @@ export async function waitForAllServices() {
   async function waitForWebService() {
     return retry(fetchStatusPage, {
       retries: 100,
+      maxTimeout: 1000,
     });
 
     async function fetchStatusPage() {
