@@ -1,5 +1,6 @@
 import database from "@/infra/database.js";
-import { waitForAllServices, WEB_SERVICE_URL } from "@/tests/orchestrator";
+import webserver from "@/infra/webserver";
+import { waitForAllServices } from "@/tests/orchestrator";
 
 beforeAll(async () => {
   await waitForAllServices();
@@ -7,7 +8,7 @@ beforeAll(async () => {
 });
 
 test("POST to /api/v1/migrations should return 200", async () => {
-  const response1 = await fetch(`${WEB_SERVICE_URL}/api/v1/migrations`, {
+  const response1 = await fetch(`${webserver.getOrigin}/api/v1/migrations`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -20,7 +21,7 @@ test("POST to /api/v1/migrations should return 200", async () => {
   expect(Array.isArray(response1Body)).toBe(true);
   expect(response1Body.length).toBeGreaterThan(0);
 
-  const response2 = await fetch(`${WEB_SERVICE_URL}/api/v1/migrations`, {
+  const response2 = await fetch(`${webserver.getOrigin}/api/v1/migrations`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

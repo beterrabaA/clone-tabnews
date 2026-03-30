@@ -1,6 +1,5 @@
 import retry from "async-retry";
-
-export const WEB_SERVICE_URL = "http://localhost:3000";
+import webserver from "@/infra/webserver";
 
 export async function waitForAllServices() {
   await waitForWebService();
@@ -12,8 +11,11 @@ export async function waitForAllServices() {
     });
 
     async function fetchStatusPage() {
-      const response = await fetch(`${WEB_SERVICE_URL}/api/v1/status`);
-      await response.json();
+      const response = await fetch(`${webserver.getOrigin}/api/v1/status`);
+
+      if (response.status !== 200) {
+        throw Error();
+      }
     }
   }
 }

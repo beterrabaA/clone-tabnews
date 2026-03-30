@@ -1,11 +1,12 @@
-import { waitForAllServices, WEB_SERVICE_URL } from "@/tests/orchestrator";
+import webserver from "@/infra/webserver";
+import { waitForAllServices } from "@/tests/orchestrator";
 
 beforeAll(async () => {
   await waitForAllServices();
 });
 
 test("GET to /api/v1/status should return 200", async () => {
-  const response = await fetch(`${WEB_SERVICE_URL}/api/v1/status`);
+  const response = await fetch(`${webserver.getOrigin}/api/v1/status`);
   expect(response.status).toBe(200);
 
   const responseBody = await response.json();
