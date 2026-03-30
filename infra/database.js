@@ -1,7 +1,7 @@
-import {Client} from "pg";
+import { Client } from "pg";
 
 async function query(queryObj) {
-  let client
+  let client;
 
   try {
     client = await getNewClient();
@@ -25,15 +25,13 @@ async function getNewClient() {
   });
 
   await client.connect();
-  return client
+  return client;
 }
 
 const database = {
   query,
-  getNewClient
+  getNewClient,
 };
-
-
 
 export default database;
 
