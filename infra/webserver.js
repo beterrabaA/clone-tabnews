@@ -10,6 +10,8 @@ function getOrigin() {
   return "https://fintab.com.br";
 }
 
-export default {
+const webserver = {
   getOrigin: getOrigin(),
 };
+
+export default webserver;
