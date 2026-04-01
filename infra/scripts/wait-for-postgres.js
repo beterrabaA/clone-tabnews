@@ -5,7 +5,7 @@ const DATABASE_CONTAINER_NAME = "clone-tabnews-database-dev";
 function checkPostgres() {
   exec(`docker exec ${DATABASE_CONTAINER_NAME} pg_isready`, handleReturn);
 
-  function handleReturn(error, stdout, stderr) {
+  function handleReturn(_error, stdout) {
     if (stdout.search("accepting connections") === -1) {
       process.stdout.write(".");
       setTimeout(checkPostgres, 2000);

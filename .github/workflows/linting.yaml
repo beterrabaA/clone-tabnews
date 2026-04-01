@@ -3,8 +3,8 @@ name: Linting
 on: pull_request
 
 jobs:
-  jest:
-    name: Run prittier and ESLint checks
+  prettier:
+    name: Run prettier checks
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -15,5 +15,19 @@ jobs:
           node-version: "lts/krypton"
       - name: Install dependencies
         run: npm ci
-      - name: Run linting checks
+      - name: Run prettier linting checks
         run: npm run lint:check
+  eslint:
+    name: Run ESLint checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/krypton"
+      - name: Install dependencies
+        run: npm ci
+      - name: Run ESLint checks
+        run: npm run eslint:check
