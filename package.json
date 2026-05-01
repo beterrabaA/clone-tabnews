@@ -8,6 +8,7 @@
   "type": "module",
   "scripts": {
     "dev": "npm run services:up && npm run services:wait:database && npm run migration:up && next dev",
+    "postdev": "npm run services:stop",
     "services:up": "docker compose -f infra/compose.yaml up -d",
     "services:stop": "docker compose -f infra/compose.yaml stop",
     "services:down": "docker compose -f infra/compose.yaml down",
@@ -19,6 +20,7 @@
     "lint:fix": "prettier --write .",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
+    "posttest": "npm run services:stop",
     "test": "npm run services:up && concurrently -n next,jest --hide next -k -s command-jest \"next dev\" \"jest --runInBand\"",
     "test:watch": "jest --watchAll --runInBand",
     "migration:create": "node-pg-migrate -m infra/migrations create",
