@@ -25,12 +25,10 @@ try {
   });
 
   process.on("SIGINT", () => {
-    console.log("Received SIGINT. Cleaning up...");
     nextProcess.emit("close", 0);
   });
 
   process.on("SIGTERM", () => {
-    console.log("Received SIGTERM. Cleaning up...");
     nextProcess.emit("close", 0);
   });
 
