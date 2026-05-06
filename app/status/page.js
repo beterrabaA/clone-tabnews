@@ -2,7 +2,9 @@ import { DatabaseStatus } from "@/components/DatabaseStatus";
 import { UpdatedAt } from "@/components/UpdatedAt";
 import webserver from "@/infra/webserver";
 
-export default function StatusPage({ data }) {
+export default async function StatusPage() {
+  const response = await fetch(`${webserver.getOrigin}/api/v1/status`);
+  const data = await response.json();
   return (
     <div>
       <h1>Status</h1>
@@ -14,14 +16,4 @@ export default function StatusPage({ data }) {
       />
     </div>
   );
-}
-
-export async function getServerSideProps() {
-  const response = await fetch(`${webserver.getOrigin}/api/v1/status`);
-  const data = await response.json();
-  return {
-    props: {
-      data,
-    },
-  };
 }

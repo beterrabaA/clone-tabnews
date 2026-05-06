@@ -1,7 +1,8 @@
 import database from "@/infra/database.js";
 import { InternalServerError } from "@/infra/errors";
+import { NextResponse } from "next/server";
 
-async function status(_request, response) {
+export async function GET() {
   try {
     const updatedAt = new Date().toISOString();
 
@@ -22,7 +23,7 @@ async function status(_request, response) {
     const databaseOpenedConnectionsValue =
       databaseOpenedConnectionsResult.rows[0].count;
 
-    return response.status(200).json({
+    return NextResponse.json({
       updated_at: updatedAt,
       dependencies: {
         database: {
@@ -37,8 +38,8 @@ async function status(_request, response) {
       cause: error,
     });
     console.error("Error fetching status:", publicErrorObject);
-    return response.status(500).json(publicErrorObject);
+    return NextResponse.json(publicErrorObject, {
+      status: publicErrorObject.statusCode,
+    });
   }
 }
-
-export default status;
