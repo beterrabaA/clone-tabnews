@@ -1,13 +1,9 @@
-export const dynamic = "force-dynamic";
-
 import { DatabaseStatus } from "@/components/DatabaseStatus";
 import { UpdatedAt } from "@/components/UpdatedAt";
+import { fetchStatus } from "@/lib/actions";
 
 export default async function StatusPage() {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_SITE_URL}/api/v1/status`,
-  );
-  const data = await response.json();
+  const data = await fetchStatus();
   return (
     <div>
       <h1>Status</h1>
