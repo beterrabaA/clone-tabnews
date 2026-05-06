@@ -1,9 +1,9 @@
 import { DatabaseStatus } from "@/components/DatabaseStatus";
 import { UpdatedAt } from "@/components/UpdatedAt";
-console.log(process.env.NEXT_PUBLIC_SITE_URL);
+import webserver from "@/infra/webserver";
 
 export default async function StatusPage() {
-  const response = await fetch(`${process.env.VERCEL_URL}/api/v1/status`);
+  const response = await fetch(`${webserver.getOrigin}/api/v1/status`);
   const data = await response.json();
   return (
     <div>
