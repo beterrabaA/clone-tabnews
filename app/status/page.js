@@ -1,10 +1,9 @@
 import { DatabaseStatus } from "@/components/DatabaseStatus";
 import { UpdatedAt } from "@/components/UpdatedAt";
-import webserver from "@/infra/webserver";
+import { fetchStatus } from "@/lib/actions";
 
 export default async function StatusPage() {
-  const response = await fetch(`${webserver.getOrigin}/api/v1/status`);
-  const data = await response.json();
+  const data = await fetchStatus();
   return (
     <div>
       <h1>Status</h1>
