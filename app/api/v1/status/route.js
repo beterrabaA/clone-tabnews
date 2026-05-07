@@ -1,5 +1,5 @@
 import database from "@/infra/database.js";
-import { InternalServerError } from "@/infra/errors";
+import { InternalServerError, MethodNotAllowedError } from "@/infra/errors";
 import { NextResponse } from "next/server";
 
 export async function GET() {
@@ -34,12 +34,35 @@ export async function GET() {
       },
     });
   } catch (error) {
+    console.log(error);
+
     const publicErrorObject = new InternalServerError({
       cause: error,
+      code: error?.statusCode,
     });
-    console.error("Error fetching status:", publicErrorObject);
+    console.error(
+      "\n<===> Controller Error <===> Error fetching status:",
+      publicErrorObject,
+    );
     return NextResponse.json(publicErrorObject, {
       status: publicErrorObject.statusCode,
     });
   }
+}
+
+export async function POST() {
+  return custom405();
+}
+export async function PUT() {
+  return custom405();
+}
+export async function DELETE() {
+  return custom405();
+}
+
+function custom405() {
+  const methodNotAllowedError = new MethodNotAllowedError();
+  return new NextResponse(JSON.stringify(methodNotAllowedError), {
+    status: methodNotAllowedError.statusCode,
+  });
 }

@@ -2,6 +2,7 @@ import migrationRunner from "node-pg-migrate";
 import { resolve } from "path";
 import database from "infra/database.js";
 import { NextResponse } from "next/server";
+import { InternalServerError, MethodNotAllowedError } from "@/infra/errors";
 
 async function runMigrations(dryRun) {
   let dbClient;
@@ -12,6 +13,7 @@ async function runMigrations(dryRun) {
       dir: resolve("infra", "migrations"),
       dryRun,
       direction: "up",
+      verbose: process.env.NODE_ENV === "development",
       migrationsTable: "pgmigrations",
     };
 
@@ -28,11 +30,16 @@ export async function GET() {
     const pendingMigrations = await runMigrations(true);
     return NextResponse.json(pendingMigrations, { status: 200 });
   } catch (error) {
-    console.error(error);
-    return NextResponse.json(
-      { error: "Internal Server Error" },
-      { status: 500 },
+    const publicErrorObject = new InternalServerError({
+      cause: error,
+    });
+    console.error(
+      "\n<===> Controller Error <===> Error fetching status:",
+      publicErrorObject,
     );
+    return NextResponse.json(publicErrorObject, {
+      status: publicErrorObject.statusCode,
+    });
   }
 }
 
@@ -42,10 +49,29 @@ export async function POST() {
     const status = migratedMigrations.length > 0 ? 201 : 200;
     return NextResponse.json(migratedMigrations, { status });
   } catch (error) {
-    console.error(error);
-    return NextResponse.json(
-      { error: "Internal Server Error" },
-      { status: 500 },
+    const publicErrorObject = new InternalServerError({
+      cause: error,
+    });
+    console.error(
+      "\n<===> Controller Error <===> Error running migrations:",
+      publicErrorObject,
     );
+    return NextResponse.json(publicErrorObject, {
+      status: publicErrorObject.statusCode,
+    });
   }
+}
+
+export async function PUT() {
+  return custom405();
+}
+export async function DELETE() {
+  return custom405();
+}
+
+function custom405() {
+  const methodNotAllowedError = new MethodNotAllowedError();
+  return new NextResponse(JSON.stringify(methodNotAllowedError), {
+    status: methodNotAllowedError.statusCode,
+  });
 }
