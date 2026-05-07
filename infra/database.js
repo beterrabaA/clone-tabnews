@@ -1,4 +1,5 @@
 import { Client } from "pg";
+import { ServiceUnavailableError } from "./errors";
 
 async function query(queryObj) {
   let client;
@@ -7,8 +8,15 @@ async function query(queryObj) {
     client = await getNewClient();
     return await client.query(queryObj);
   } catch (error) {
-    console.error(error);
-    throw error;
+    const serviceError = new ServiceUnavailableError({
+      message: "Erro ao executar a consulta no banco de dados.",
+      cause: error,
+    });
+    console.error(
+      "\n<===> Database Error <===> An error occurred while executing a database query:",
+      serviceError,
+    );
+    throw serviceError;
   } finally {
     await client?.end();
   }
