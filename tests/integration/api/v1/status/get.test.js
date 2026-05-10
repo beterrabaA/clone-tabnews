@@ -1,8 +1,10 @@
 import database from "@/infra/database";
-import { InternalServerError, ServiceUnavailableError } from "@/infra/errors";
 import webserver from "@/infra/webserver";
 import { fetchStatus } from "@/lib/actions";
 import { waitForAllServices } from "@/tests/orchestrator";
+import errors from "@/infra/errors";
+
+const { InternalServerError, ServiceUnavailableError } = errors;
 
 beforeAll(async () => {
   await waitForAllServices();
