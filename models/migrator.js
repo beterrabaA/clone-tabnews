@@ -1,7 +1,7 @@
 import { resolve } from "path";
-import database from "infra/database.js";
 import migrationRunner from "node-pg-migrate";
 import { ServiceUnavailableError } from "@/infra/errors";
+import database from "@/infra/database";
 
 async function runMigrations(dryRun) {
   let dbClient;
