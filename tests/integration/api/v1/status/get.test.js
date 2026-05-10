@@ -1,4 +1,3 @@
-/* eslint-disable jest/no-disabled-tests */
 import database from "@/infra/database";
 import { InternalServerError, ServiceUnavailableError } from "@/infra/errors";
 import webserver from "@/infra/webserver";
