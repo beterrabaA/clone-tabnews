@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
-import { InternalServerError, MethodNotAllowedError } from "@/infra/errors";
+import errors from "@/infra/errors";
 import migrator from "@/models/migrator.js";
+
+const { InternalServerError, MethodNotAllowedError } = errors;
 
 export async function GET() {
   try {

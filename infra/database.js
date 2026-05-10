@@ -1,5 +1,7 @@
 import { Client } from "pg";
-import { ServiceUnavailableError } from "./errors";
+import errors from "@/infra/errors";
+
+const { ServiceUnavailableError } = errors;
 
 async function query(queryObj) {
   let client;

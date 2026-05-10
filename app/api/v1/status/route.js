@@ -1,6 +1,8 @@
 import database from "@/infra/database";
-import { InternalServerError, MethodNotAllowedError } from "@/infra/errors";
+import errors from "@/infra/errors";
 import { NextResponse } from "next/server";
+
+const { InternalServerError, MethodNotAllowedError } = errors;
 
 export async function GET() {
   try {
