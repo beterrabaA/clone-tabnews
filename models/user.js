@@ -2,7 +2,7 @@ import database from "@/infra/database";
 import errors from "@/infra/errors";
 import { hashSync } from "bcrypt";
 
-const { ValidationError } = errors;
+const { ValidationError, NotFoundError } = errors;
 
 async function create(username, email, password) {
   if (!username || !email || !password) {
@@ -50,6 +50,19 @@ async function create(username, email, password) {
   return newUser;
 }
 
+async function findOneByUsername(username) {
+  const userData = await runSelectQuery(username);
+
+  if (!userData) {
+    throw new NotFoundError({
+      message: "Usuário não encontrado.",
+      action: "Verifique o nome de usuário e tente novamente.",
+    });
+  }
+
+  return userData;
+}
+
 async function runInsertQuery({ username, email, password }) {
   const { rows } = await database.query({
     text: `
@@ -61,6 +74,23 @@ async function runInsertQuery({ username, email, password }) {
         id, username, email, created_at AS "createdAt", updated_at AS "updatedAt";
     `,
     values: [username, email, password],
+  });
+
+  return rows[0];
+}
+
+async function runSelectQuery(username) {
+  const { rows } = await database.query({
+    text: `
+    SELECT 
+      id, username, email 
+    FROM 
+      users 
+    WHERE 
+      LOWER(username) = LOWER($1) 
+    LIMIT 
+      1;`,
+    values: [username],
   });
 
   return rows[0];
@@ -92,6 +122,7 @@ async function validateUniqueUsername(username) {
 
 const user = {
   create,
+  findOneByUsername,
 };
 
 export default user;
