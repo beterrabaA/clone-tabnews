@@ -58,6 +58,9 @@ export async function POST() {
 export async function PUT() {
   return custom405();
 }
+export async function PATCH() {
+  return custom405();
+}
 export async function DELETE() {
   return custom405();
 }
