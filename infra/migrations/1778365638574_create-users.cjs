@@ -1,4 +1,4 @@
-export async function up(pgm) {
+exports.up = async (pgm) => {
   pgm.createTable("users", {
     id: {
       type: "uuid",
@@ -33,8 +33,8 @@ export async function up(pgm) {
       default: pgm.func("current_timestamp(2)"),
     },
   });
-}
+};
 
-export async function down(pgm) {
+exports.down = async (pgm) => {
   pgm.dropTable("users");
-}
+};
