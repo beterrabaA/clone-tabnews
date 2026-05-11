@@ -65,4 +65,52 @@ class MethodNotAllowedError extends Error {
   }
 }
 
-export { InternalServerError, ServiceUnavailableError, MethodNotAllowedError };
+class ValidationError extends Error {
+  constructor({ message, cause, action }) {
+    super(message || "Dados de entrada inválidos.", { cause });
+    this.name = "ValidationError";
+    this.statusCode = 400;
+    this.action =
+      action ||
+      "Verifique os dados enviados e corrija os erros indicados para prosseguir.";
+  }
+
+  toJSON() {
+    return {
+      name: this.name,
+      message: this.message,
+      status_code: this.statusCode,
+      action: this.action,
+    };
+  }
+}
+
+class NotFoundError extends Error {
+  constructor({ message, cause, action }) {
+    super(message || "Recurso não encontrado.", { cause });
+    this.name = "NotFoundError";
+    this.statusCode = 404;
+    this.action =
+      action ||
+      "Verifique se o recurso existe e se a URL está correta, e tente novamente.";
+  }
+
+  toJSON() {
+    return {
+      name: this.name,
+      message: this.message,
+      status_code: this.statusCode,
+      action: this.action,
+    };
+  }
+}
+
+const erros = {
+  InternalServerError,
+  ServiceUnavailableError,
+  MethodNotAllowedError,
+  ValidationError,
+  NotFoundError,
+};
+
+export default erros;

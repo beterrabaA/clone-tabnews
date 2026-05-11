@@ -1,7 +1,9 @@
 import { resolve } from "path";
-import database from "infra/database.js";
 import migrationRunner from "node-pg-migrate";
-import { ServiceUnavailableError } from "@/infra/errors";
+import errors from "@/infra/errors";
+import database from "@/infra/database";
+
+const { ServiceUnavailableError } = errors;
 
 async function runMigrations(dryRun) {
   let dbClient;
@@ -13,6 +15,7 @@ async function runMigrations(dryRun) {
       dryRun,
       direction: "up",
       verbose: process.env.NODE_ENV === "development",
+      log: () => {}, // Suppress logs from node-pg-migrate
       migrationsTable: "pgmigrations",
     };
 

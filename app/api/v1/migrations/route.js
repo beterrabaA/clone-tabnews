@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
-import { InternalServerError, MethodNotAllowedError } from "@/infra/errors";
+import errors from "@/infra/errors";
 import migrator from "@/models/migrator.js";
+
+const { InternalServerError, MethodNotAllowedError } = errors;
 
 export async function GET() {
   try {
@@ -40,6 +42,9 @@ export async function POST() {
 }
 
 export async function PUT() {
+  return custom405();
+}
+export async function PATCH() {
   return custom405();
 }
 export async function DELETE() {

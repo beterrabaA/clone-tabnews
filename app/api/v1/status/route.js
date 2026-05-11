@@ -1,6 +1,8 @@
-import database from "@/infra/database.js";
-import { InternalServerError, MethodNotAllowedError } from "@/infra/errors";
+import database from "@/infra/database";
+import errors from "@/infra/errors";
 import { NextResponse } from "next/server";
+
+const { InternalServerError, MethodNotAllowedError } = errors;
 
 export async function GET() {
   try {
@@ -56,11 +58,14 @@ export async function POST() {
 export async function PUT() {
   return custom405();
 }
+export async function PATCH() {
+  return custom405();
+}
 export async function DELETE() {
   return custom405();
 }
 
-function custom405() {
+export function custom405() {
   const methodNotAllowedError = new MethodNotAllowedError();
   return new NextResponse(JSON.stringify(methodNotAllowedError), {
     status: methodNotAllowedError.statusCode,
