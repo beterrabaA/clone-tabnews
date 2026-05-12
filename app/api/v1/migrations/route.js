@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
 import errors from "@/infra/errors";
 import migrator from "@/models/migrator.js";
+import { custom405 } from "../status/route";
 
-const { InternalServerError, MethodNotAllowedError } = errors;
+const { InternalServerError } = errors;
 
 export async function GET() {
   try {
@@ -49,11 +50,4 @@ export async function PATCH() {
 }
 export async function DELETE() {
   return custom405();
-}
-
-function custom405() {
-  const methodNotAllowedError = new MethodNotAllowedError();
-  return new NextResponse(JSON.stringify(methodNotAllowedError), {
-    status: methodNotAllowedError.statusCode,
-  });
 }

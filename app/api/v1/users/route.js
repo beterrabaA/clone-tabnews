@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
-import { custom405 } from "../status/route";
 import erros from "@/infra/errors";
 import user from "@/models/user";
+import { custom405 } from "../status/route";
 
 const { InternalServerError } = erros;
 
 export async function GET() {
-  custom405();
+  return custom405();
 }
 
 export async function POST(request) {
@@ -39,11 +39,11 @@ export async function POST(request) {
 }
 
 export async function PUT() {
-  custom405();
+  return custom405();
 }
 export async function PATCH() {
-  custom405();
+  return custom405();
 }
 export async function DELETE() {
-  custom405();
+  return custom405();
 }
