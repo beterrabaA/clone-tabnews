@@ -1,6 +1,6 @@
 import database from "@/infra/database";
 import errors from "@/infra/errors";
-import { hashSync } from "bcrypt";
+import password from "@/models/password";
 
 const { ValidationError, NotFoundError } = errors;
 
@@ -39,7 +39,7 @@ async function create(username, email, password) {
       action: "Utilize outro nome de usuário.",
     });
 
-  const hashedPassword = hashSync(password, 10); // TODO: hash password before storing in database
+  const hashedPassword = await hashPasswordInObject(password);
 
   const newUser = await runInsertQuery({
     username,
@@ -118,6 +118,11 @@ async function validateUniqueUsername(username) {
   });
 
   return rows[0];
+}
+
+async function hashPasswordInObject(payload) {
+  const hashedPassword = await password.hash(payload);
+  return hashedPassword;
 }
 
 const user = {
