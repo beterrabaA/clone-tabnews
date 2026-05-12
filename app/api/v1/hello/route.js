@@ -1,5 +1,5 @@
+import { custom405 } from "@/utils/response";
 import { NextResponse } from "next/server";
-import { custom405 } from "../status/route";
 
 export async function GET() {
   return NextResponse.json({ message: "Hello, World!" });

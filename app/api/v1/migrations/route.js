@@ -1,25 +1,13 @@
 import { NextResponse } from "next/server";
-import errors from "@/infra/errors";
 import migrator from "@/models/migrator.js";
-import { custom405 } from "../status/route";
-
-const { InternalServerError } = errors;
+import { custom405, custom500 } from "@/utils/response";
 
 export async function GET() {
   try {
     const pendingMigrations = await migrator.runMigrations(true);
     return NextResponse.json(pendingMigrations);
   } catch (error) {
-    const publicErrorObject = new InternalServerError({
-      cause: error,
-    });
-    console.error(
-      "\n<===> Controller Error <===> Error fetching pending migrations:",
-      publicErrorObject,
-    );
-    return NextResponse.json(publicErrorObject, {
-      status: publicErrorObject.statusCode,
-    });
+    return custom500(error);
   }
 }
 
@@ -29,16 +17,7 @@ export async function POST() {
     const status = migratedMigrations.length > 0 ? 201 : 200;
     return NextResponse.json(migratedMigrations, { status });
   } catch (error) {
-    const publicErrorObject = new InternalServerError({
-      cause: error,
-    });
-    console.error(
-      "\n<===> Controller Error <===> Error running migrations:",
-      publicErrorObject,
-    );
-    return NextResponse.json(publicErrorObject, {
-      status: publicErrorObject.statusCode,
-    });
+    return custom500(error);
   }
 }
 

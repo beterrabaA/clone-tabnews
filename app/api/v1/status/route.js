@@ -1,8 +1,6 @@
 import database from "@/infra/database";
-import errors from "@/infra/errors";
+import { custom405, custom500 } from "@/utils/response";
 import { NextResponse } from "next/server";
-
-const { InternalServerError, MethodNotAllowedError } = errors;
 
 export async function GET() {
   try {
@@ -36,19 +34,7 @@ export async function GET() {
       },
     });
   } catch (error) {
-    console.log(error);
-
-    const publicErrorObject = new InternalServerError({
-      cause: error,
-      code: error?.statusCode,
-    });
-    console.error(
-      "\n<===> Controller Error <===> Error fetching status:",
-      publicErrorObject,
-    );
-    return NextResponse.json(publicErrorObject, {
-      status: publicErrorObject.statusCode,
-    });
+    return custom500(error);
   }
 }
 
@@ -63,11 +49,4 @@ export async function PATCH() {
 }
 export async function DELETE() {
   return custom405();
-}
-
-export function custom405() {
-  const methodNotAllowedError = new MethodNotAllowedError();
-  return new NextResponse(JSON.stringify(methodNotAllowedError), {
-    status: methodNotAllowedError.statusCode,
-  });
 }
