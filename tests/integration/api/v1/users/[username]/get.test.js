@@ -50,8 +50,11 @@ describe("GET /api/v1/users/[username]", () => {
           },
         },
       );
-      const data = await response.json();
+
       expect(response.status).toBe(404);
+
+      const data = await response.json();
+
       expect(data).toEqual({
         name: "NotFoundError",
         message: "Usuário não encontrado.",
