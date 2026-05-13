@@ -39,6 +39,7 @@ describe("POST /api/v1/users", () => {
       expect(uuidVersion(data.id)).toBe(7);
       expect(data).toHaveProperty("username", fakeUserData.username);
       expect(data).toHaveProperty("email", fakeUserData.email);
+      expect(data.password).toBeUndefined();
       expect(data).toHaveProperty("createdAt");
       expect(data).toHaveProperty("updatedAt");
 
@@ -94,7 +95,7 @@ describe("POST /api/v1/users", () => {
         action: "Verifique a senha e tente novamente.",
       });
     });
-    test("With duplicate username, should return 400", async () => {
+    test("With duplicate username, should return 409", async () => {
       const duplicateUsernameUserData = {
         username: "beterraba", // Same username as the first test
         email: "duplicateusername@example.com",
@@ -110,15 +111,15 @@ describe("POST /api/v1/users", () => {
       });
       const data = await response.json();
 
-      expect(response.status).toBe(400);
+      expect(response.status).toBe(409);
       expect(data).toEqual({
-        name: "ValidationError",
+        name: "ConflictError",
         message: "O nome de usuário informado já está sendo utilizado.",
-        status_code: 400,
-        action: "Utilize outro nome de usuário.",
+        status_code: 409,
+        action: "Escolha outro nome de usuário e tente novamente.",
       });
     });
-    test("With duplicate email, should return 400", async () => {
+    test("With duplicate email, should return 409", async () => {
       const duplicateEmailUserData = {
         username: "anotheruser",
         email: "beterraba@example.com",
@@ -132,13 +133,15 @@ describe("POST /api/v1/users", () => {
         },
         body: JSON.stringify(duplicateEmailUserData),
       });
-      const responseData = await response.json();
 
-      expect(response.status).toBe(400);
-      expect(responseData).toEqual({
-        name: "ValidationError",
+      expect(response.status).toBe(409);
+
+      const data = await response.json();
+
+      expect(data).toEqual({
+        name: "ConflictError",
         message: "O email informado já está sendo utilizado.",
-        status_code: 400,
+        status_code: 409,
         action: "Utilize outro email ou recupere a senha caso tenha esquecido.",
       });
     });
