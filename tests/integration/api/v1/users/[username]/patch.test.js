@@ -44,8 +44,6 @@ describe("PATCH /api/v1/users/[username]", () => {
     test("2 - with empty payload, should return 400", async () => {
       const fakeUserData = {
         username: "TesadaastUserForPatch",
-        email: "emailadadadsw@email.com",
-        password: "password",
       };
 
       await createUserAction(fakeUserData);
@@ -75,8 +73,6 @@ describe("PATCH /api/v1/users/[username]", () => {
     test("3 - with invalid payload, should return 400", async () => {
       const fakeUserData = {
         username: "TestUserzczForPatchInvalid",
-        email: "emdsa2342ewdail@email.com",
-        password: "password",
       };
 
       await createUserAction(fakeUserData);
@@ -109,8 +105,6 @@ describe("PATCH /api/v1/users/[username]", () => {
     test("4 - with incorret data type, should return 400", async () => {
       const fakeUserData = {
         username: "TestUserForPatchInvalidType",
-        email: "email4353@email.com",
-        password: "password",
       };
 
       await createUserAction(fakeUserData);
@@ -143,13 +137,9 @@ describe("PATCH /api/v1/users/[username]", () => {
       const usersData = [
         {
           username: "ExistingUserFo",
-          email: "email@email.com",
-          password: "password",
         },
         {
           username: "AnotherExisting",
-          email: "email@email2.com",
-          password: "password",
         },
       ];
 
@@ -186,8 +176,6 @@ describe("PATCH /api/v1/users/[username]", () => {
     test("6 - with valid payload but username with more than 30 characters, should return 400", async () => {
       const fakeUserData = {
         username: "testuser",
-        email: "email@email3.com",
-        password: "password",
       };
 
       await createUserAction(fakeUserData);
@@ -219,8 +207,6 @@ describe("PATCH /api/v1/users/[username]", () => {
     test("7 - with valid payload but username with empty string, should return 400", async () => {
       const fakeUserData = {
         username: "testuserempty",
-        email: "email@email23244.com",
-        password: "password",
       };
 
       await createUserAction(fakeUserData);
@@ -253,7 +239,6 @@ describe("PATCH /api/v1/users/[username]", () => {
       const fakeUserData = {
         username: "testuserforpatchazupdate",
         email: "email4asdsasda@email.com",
-        password: "password",
       };
 
       const newUsername = "newusername";
@@ -291,7 +276,6 @@ describe("PATCH /api/v1/users/[username]", () => {
       const fakeUserData = {
         username: "eqoieawjdoiahds",
         email: "emaildadasadodiajda@email.com",
-        password: "password",
       };
 
       await createUserAction(fakeUserData);
@@ -328,8 +312,6 @@ describe("PATCH /api/v1/users/[username]", () => {
     test("10 - with valid payload and case-insensitive email, should return 200", async () => {
       const fakeUserData = {
         username: "eqoieawjdoiahds",
-        email: "emaildadasadodia33jda@email.com",
-        password: "password",
       };
 
       await createUserAction(fakeUserData);
@@ -366,8 +348,6 @@ describe("PATCH /api/v1/users/[username]", () => {
     test("11 - with valid payload but using invalid email format, should return 400", async () => {
       const fakeUserData = {
         username: "aaxzc324eqwdas",
-        email: "sdqeqewqda@email.com",
-        password: "password",
       };
 
       await createUserAction(fakeUserData);
@@ -401,8 +381,6 @@ describe("PATCH /api/v1/users/[username]", () => {
     test("12 - with valid payload, using password with less than 6 characters, should return 400", async () => {
       const fakeUserData = {
         username: "123qeua9dua08ad",
-        email: "emadasd3423esdasail@email.com",
-        password: "adsa3e4124eqwedaws",
       };
 
       await createUserAction(fakeUserData);
@@ -437,7 +415,6 @@ describe("PATCH /api/v1/users/[username]", () => {
       const fakeUserData = {
         username: "eqoieawjdoi45ahds",
         email: "emailda23sd33jda@email.com",
-        password: "password",
       };
 
       await createUserAction(fakeUserData);
