@@ -105,12 +105,33 @@ class NotFoundError extends Error {
   }
 }
 
+class ConflictError extends Error {
+  constructor({ message, cause, action }) {
+    super(message || "Conflito de dados.", { cause });
+    this.name = "ConflictError";
+    this.statusCode = 409;
+    this.action =
+      action ||
+      "Verifique os dados enviados para evitar conflitos e tente novamente.";
+  }
+
+  toJSON() {
+    return {
+      name: this.name,
+      message: this.message,
+      status_code: this.statusCode,
+      action: this.action,
+    };
+  }
+}
+
 const erros = {
   InternalServerError,
   ServiceUnavailableError,
   MethodNotAllowedError,
   ValidationError,
   NotFoundError,
+  ConflictError,
 };
 
 export default erros;
