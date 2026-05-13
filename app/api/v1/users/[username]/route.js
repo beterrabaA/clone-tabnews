@@ -6,6 +6,7 @@ export async function GET(request, { params }) {
   const { username } = await params;
   try {
     const data = await user.findOneByUsername(username);
+    delete data.password;
     return NextResponse.json(data);
   } catch (error) {
     return custom500(error);
@@ -24,6 +25,13 @@ export async function DELETE() {
   return custom405();
 }
 
-export async function PATCH() {
-  return custom405();
+export async function PATCH(request, { params }) {
+  const { username } = await params;
+  const body = await request.json();
+  try {
+    const updatedUser = await user.update(username, body);
+    return NextResponse.json(updatedUser);
+  } catch (error) {
+    return custom500(error);
+  }
 }
