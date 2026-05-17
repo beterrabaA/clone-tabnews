@@ -4,13 +4,13 @@ import password from "@/models/password";
 
 const { UnauthorizedError, ValidationError } = errors;
 
-async function createSession(payload) {
+async function getUser(payload) {
   validateSessionPayload(payload);
 
   const currentUser = await findOneByEmail(payload.email);
   await validateSessionPassword(payload.password, currentUser?.password);
 
-  return {};
+  return { id: currentUser.id };
 }
 
 async function findOneByEmail(email) {
@@ -93,7 +93,7 @@ async function validateSessionPassword(payloadPassword, currentPassword) {
 }
 
 const authenticaion = {
-  createSession,
+  getUser,
 };
 
 export default authenticaion;
