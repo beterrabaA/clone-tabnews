@@ -1,5 +1,5 @@
 export function parseCookies(cookiesString) {
-  const emyCookie = {};
+  const emyCookie = {}; // "same" as new Object()
 
   const splitedCookie = cookiesString[0].split(";");
   for (let i = 1; i < splitedCookie.length; i++) {
