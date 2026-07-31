@@ -125,6 +125,26 @@ class ConflictError extends Error {
   }
 }
 
+class UnauthorizedError extends Error {
+  constructor({ message, cause, action }) {
+    super(message || "Credenciais inválidas.", { cause });
+    this.name = "UnauthorizedError";
+    this.statusCode = 401;
+    this.action =
+      action ||
+      "Verifique se o email e senha estão corretos e tente novamente.";
+  }
+
+  toJSON() {
+    return {
+      name: this.name,
+      message: this.message,
+      status_code: this.statusCode,
+      action: this.action,
+    };
+  }
+}
+
 const erros = {
   InternalServerError,
   ServiceUnavailableError,
@@ -132,6 +152,7 @@ const erros = {
   ValidationError,
   NotFoundError,
   ConflictError,
+  UnauthorizedError,
 };
 
 export default erros;

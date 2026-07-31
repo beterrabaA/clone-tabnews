@@ -209,6 +209,7 @@ const user = {
   create,
   findOneByUsername,
   update,
+  hashPasswordInObject,
 };
 
 export default user;
