@@ -39,6 +39,19 @@ async function findOneByUsername(username) {
   return userData;
 }
 
+async function findOneById(id) {
+  const userData = await runSelectQueryById(id);
+
+  if (!userData) {
+    throw new NotFoundError({
+      message: "Usuário não encontrado.",
+      action: "Verifique o ID do usuário e tente novamente.",
+    });
+  }
+
+  return userData;
+}
+
 async function update(username, payload) {
   const existingUser = await findOneByUsername(username);
 
@@ -105,6 +118,23 @@ async function runSelectQuery(username) {
     LIMIT 
       1;`,
     values: [username],
+  });
+
+  return rows[0];
+}
+
+async function runSelectQueryById(id) {
+  const { rows } = await database.query({
+    text: `
+    SELECT 
+      id, username, email, created_at AS "createdAt", updated_at AS "updatedAt"
+    FROM 
+      users 
+    WHERE 
+      id = $1 
+    LIMIT 
+      1;`,
+    values: [id],
   });
 
   return rows[0];
@@ -208,6 +238,7 @@ async function hashPasswordInObject(payload) {
 const user = {
   create,
   findOneByUsername,
+  findOneById,
   update,
   hashPasswordInObject,
 };
