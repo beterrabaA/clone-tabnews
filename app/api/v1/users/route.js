@@ -30,6 +30,11 @@ export async function GET() {
       expires: sessionObject.expiresAt,
     });
 
+    response.headers.set(
+      "Cache-Control",
+      "no-store, no-cache, max-age=0, must-revalidate, proxy-revalidate",
+    );
+
     return response;
   } catch (error) {
     return custom500(error);

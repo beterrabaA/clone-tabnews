@@ -52,6 +52,12 @@ describe("GET /api/v1/users", () => {
 
       expect(response.status).toBe(200);
 
+      const cacheControlHeader = response.headers.get("Cache-Control");
+
+      expect(cacheControlHeader).toBe(
+        "no-store, no-cache, max-age=0, must-revalidate, proxy-revalidate",
+      );
+
       const body = await response.json();
 
       expect(body).toEqual({
