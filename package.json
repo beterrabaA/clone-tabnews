@@ -49,6 +49,7 @@
     "@commitlint/cli": "20.5.3",
     "@commitlint/config-conventional": "20.5.3",
     "@eslint/js": "9.39.4",
+    "@faker-js/faker": "9.9.0",
     "@tailwindcss/postcss": "4.3.3",
     "autoprefixer": "^10.5.4",
     "commitizen": "4.3.2",
